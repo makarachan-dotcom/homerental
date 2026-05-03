@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="km" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="សុខលីផ្ទះជួល - ប្រព័ន្ធគ្រប់គ្រងផ្ទះជួលឌីជីថល">
+    <title>សុខលីផ្ទះជួល - ប្រព័ន្ធគ្រប់គ្រង</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&family=Noto+Sans+Khmer:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <i class="fas fa-home"></i>
+            </div>
+            <h2>សុខលីផ្ទះជួល</h2>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+            <p>កំពុងផ្ទុកទិន្នន័យ...</p>
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div id="app" class="app-container" style="display:none;">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="brand-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="brand-text">
+                        <h2>សុខលីផ្ទះជួល</h2>
+                        <span>ប្រព័ន្ធគ្រប់គ្រង</span>
+                    </div>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-section-title">មេន៊ូចម្បង</li>
+                    <li class="nav-item active" data-page="dashboard">
+                        <a href="#" onclick="navigateTo('dashboard')">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>ផ្ទាំងគ្រប់គ្រង</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-page="rooms">
+                        <a href="#" onclick="navigateTo('rooms')">
+                            <i class="fas fa-door-open"></i>
+                            <span>បន្ទប់</span>
+                            <span class="nav-badge" id="roomBadge"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-page="tenants">
+                        <a href="#" onclick="navigateTo('tenants')">
+                            <i class="fas fa-users"></i>
+                            <span>អ្នកជួល</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-page="contracts">
+                        <a href="#" onclick="navigateTo('contracts')">
+                            <i class="fas fa-file-contract"></i>
+                            <span>កិច្ចសន្យា</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-section-title">ហិរញ្ញវត្ថុ</li>
+                    <li class="nav-item" data-page="payments">
+                        <a href="#" onclick="navigateTo('payments')">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>ការបង់ប្រាក់</span>
+                            <span class="nav-badge warning" id="paymentBadge"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-page="utilities">
+                        <a href="#" onclick="navigateTo('utilities')">
+                            <i class="fas fa-bolt"></i>
+                            <span>វិក័យប័ត្រ</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-section-title">សេវាកម្ម</li>
+                    <li class="nav-item" data-page="maintenance">
+                        <a href="#" onclick="navigateTo('maintenance')">
+                            <i class="fas fa-tools"></i>
+                            <span>ថែទាំ</span>
+                            <span class="nav-badge danger" id="maintenanceBadge"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-page="qrcodes">
+                        <a href="#" onclick="navigateTo('qrcodes')">
+                            <i class="fas fa-qrcode"></i>
+                            <span>QR កូដ</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-section-title">ការកំណត់</li>
+                    <li class="nav-item" data-page="settings">
+                        <a href="#" onclick="navigateTo('settings')">
+                            <i class="fas fa-cog"></i>
+                            <span>ការកំណត់</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="userName">Admin</span>
+                        <span class="user-role" id="userRole">អ្នកគ្រប់គ្រង</span>
+                    </div>
+                    <button class="logout-btn" onclick="logout()" title="ចាកចេញ">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h1 id="pageTitle">ផ្ទាំងគ្រប់គ្រង</h1>
+                        <p id="pageSubtitle">ទិដ្ឋភាពទូទៅនៃអាជីវកម្មរបស់អ្នក</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="header-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="ស្វែងរក..." id="globalSearch"
+                               onkeyup="handleGlobalSearch(event)">
+                    </div>
+                    <div class="header-notifications">
+                        <button class="notification-btn" onclick="toggleNotifications()">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-count" id="notifCount">0</span>
+                        </button>
+                        <div class="notification-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>ការជូនដំណឹង</h4>
+                            </div>
+                            <div class="notif-list" id="notifList">
+                                <p class="notif-empty">គ្មានការជូនដំណឹងថ្មី</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="currentDate"></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Page Content -->
+            <div class="content-area" id="contentArea">
+                <!-- Pages will be loaded here dynamically -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal-container" id="modalContainer" onclick="event.stopPropagation()">
+            <div class="modal-header" id="modalHeader">
+                <h3 id="modalTitle">Modal Title</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content -->
+            </div>
+            <div class="modal-footer" id="modalFooter">
+                <!-- Modal actions -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/utils.js"></script>
+    <script src="/static/js/components.js"></script>
+    <script src="/static/js/pages/dashboard.js"></script>
+    <script src="/static/js/pages/rooms.js"></script>
+    <script src="/static/js/pages/tenants.js"></script>
+    <script src="/static/js/pages/contracts.js"></script>
+    <script src="/static/js/pages/payments.js"></script>
+    <script src="/static/js/pages/utilities.js"></script>
+    <script src="/static/js/pages/maintenance.js"></script>
+    <script src="/static/js/pages/qrcodes.js"></script>
+    <script src="/static/js/pages/settings.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

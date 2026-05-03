@@ -77,20 +77,26 @@ templates = Jinja2Templates(directory=str(FRONTEND_DIR / "templates"))
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     """Serve main application page."""
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(
+        request, "index.html"
+    )
 
 
 @app.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
     """Serve login page."""
-    return templates.TemplateResponse("login.html", {"request": request})
+    return templates.TemplateResponse(
+        request, "login.html"
+    )
 
 
 @app.get("/scan/{qr_type}/{item_id}", response_class=HTMLResponse)
 async def scan_page(request: Request, qr_type: str, item_id: int):
     """Serve QR scan result page (public)."""
     return templates.TemplateResponse(
-        "scan.html", {"request": request, "qr_type": qr_type, "item_id": item_id}
+        request,
+        "scan.html",
+        {"qr_type": qr_type, "item_id": item_id},
     )
 
 
@@ -102,7 +108,9 @@ async def not_found_handler(request: Request, exc):
             status_code=404,
             content={"detail": "រកមិនឃើញធនធាន"},
         )
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(
+        request, "index.html"
+    )
 
 
 @app.exception_handler(500)

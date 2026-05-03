@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="km" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>សុខលីផ្ទះជួល - ចូលប្រព័ន្ធ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&family=Noto+Sans+Khmer:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a237e;
+            --primary-light: #534bae;
+            --primary-dark: #000051;
+            --secondary: #c62828;
+            --secondary-light: #ff5f52;
+            --accent: #ff6f00;
+            --gold: #ffd54f;
+            --success: #2e7d32;
+            --warning: #f57f17;
+            --danger: #c62828;
+            --bg-gradient: linear-gradient(135deg, #1a237e 0%, #283593 30%, #3949ab 60%, #5c6bc0 100%);
+            --card-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Khmer', 'Battambang', sans-serif;
+            min-height: 100vh;
+            background: var(--bg-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-animation .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: float 20s infinite;
+        }
+
+        .bg-animation .circle:nth-child(1) { width: 300px; height: 300px; top: -100px; left: -100px; animation-delay: 0s; }
+        .bg-animation .circle:nth-child(2) { width: 200px; height: 200px; top: 50%; right: -50px; animation-delay: 3s; }
+        .bg-animation .circle:nth-child(3) { width: 400px; height: 400px; bottom: -200px; left: 30%; animation-delay: 6s; }
+        .bg-animation .circle:nth-child(4) { width: 150px; height: 150px; top: 30%; left: 50%; animation-delay: 9s; }
+        .bg-animation .circle:nth-child(5) { width: 250px; height: 250px; bottom: 10%; right: 20%; animation-delay: 12s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.05; }
+            25% { transform: translateY(-30px) rotate(5deg) scale(1.05); opacity: 0.08; }
+            50% { transform: translateY(-60px) rotate(-5deg) scale(1.1); opacity: 0.05; }
+            75% { transform: translateY(-30px) rotate(3deg) scale(1.05); opacity: 0.08; }
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 440px;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: var(--card-shadow);
+            animation: slideUp 0.8s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-logo {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px;
+            background: var(--bg-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(26, 35, 126, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(26, 35, 126, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 12px 40px rgba(26, 35, 126, 0.6); }
+        }
+
+        .login-logo i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .login-header h1 {
+            font-family: 'Battambang', cursive;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(26, 35, 126, 0.1);
+        }
+
+        .form-input:focus + i,
+        .form-input:focus ~ i {
+            color: var(--primary);
+        }
+
+        .input-wrapper:focus-within i {
+            color: var(--primary);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: var(--bg-gradient);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(26, 35, 126, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 35, 126, 0.5);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: width 0.6s, height 0.6s;
+            transform: translate(-50%, -50%);
+        }
+
+        .login-btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .login-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .login-btn .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        .login-btn.loading .btn-text { display: none; }
+        .login-btn.loading .spinner { display: block; }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            display: none;
+            padding: 12px 16px;
+            background: #fce4ec;
+            border: 1px solid #ef9a9a;
+            border-radius: 10px;
+            color: var(--danger);
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .login-footer p {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .login-footer .location {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 8px;
+            color: #777;
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 40px 24px;
+                border-radius: 20px;
+            }
+            .login-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h1>សុខលីផ្ទះជួល</h1>
+                <p>ប្រព័ន្ធគ្រប់គ្រងផ្ទះជួលឌីជីថល</p>
+            </div>
+
+            <div class="error-message" id="errorMsg">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText"></span>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">ឈ្មោះអ្នកប្រើ</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" class="form-input"
+                               placeholder="បញ្ចូលឈ្មោះអ្នកប្រើ" required autocomplete="username">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">ពាក្យសម្ងាត់</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" class="form-input"
+                               placeholder="បញ្ចូលពាក្យសម្ងាត់" required autocomplete="current-password">
+                        <span class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="eyeIcon"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">ចូលប្រព័ន្ធ</span>
+                    <div class="spinner"></div>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>&copy; 2024 សុខលីផ្ទះជួល - រក្សាសិទ្ធិគ្រប់យ៉ាង</p>
+                <div class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Domnak Thom 5, Phnom Penh, Cambodia</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if already logged in
+        if (localStorage.getItem('sokly_token')) {
+            window.location.href = '/';
+        }
+
+        function togglePassword() {
+            const input = document.getElementById('password');
+            const icon = document.getElementById('eyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const errorMsg = document.getElementById('errorMsg');
+            const errorText = document.getElementById('errorText');
+
+            btn.classList.add('loading');
+            errorMsg.classList.remove('show');
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('sokly_token', data.access_token);
+                    localStorage.setItem('sokly_user', JSON.stringify(data.user));
+                    window.location.href = '/';
+                } else {
+                    errorText.textContent = data.detail || 'ការចូលមិនបានជោគជ័យ';
+                    errorMsg.classList.add('show');
+                }
+            } catch (error) {
+                errorText.textContent = 'មិនអាចភ្ជាប់ទៅម៉ាស៊ីនមេបានទេ';
+                errorMsg.classList.add('show');
+            } finally {
+                btn.classList.remove('loading');
+            }
+        }
+
+        // Enter key handler
+        document.getElementById('password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleLogin(e);
+        });
+    </script>
+</body>
+</html>

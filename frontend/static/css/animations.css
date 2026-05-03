@@ -1,0 +1,336 @@
+/* ═══════════════════════════════════════════════════════════════
+   Animations & Visual Effects
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════ Page Transitions ═══════════ */
+.page-enter {
+    animation: pageEnter 0.4s ease forwards;
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ═══════════ Card Stagger Animation ═══════════ */
+.stagger-animate > * {
+    opacity: 0;
+    animation: staggerFadeIn 0.5s ease forwards;
+}
+
+.stagger-animate > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-animate > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-animate > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-animate > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-animate > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-animate > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-animate > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-animate > *:nth-child(8) { animation-delay: 0.4s; }
+
+@keyframes staggerFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════ Number Counter Animation ═══════════ */
+.count-up {
+    display: inline-block;
+    animation: countPop 0.6s ease;
+}
+
+@keyframes countPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ═══════════ Hover Effects ═══════════ */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+}
+
+.hover-glow {
+    transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 20px rgba(26, 35, 126, 0.3);
+}
+
+/* ═══════════ Shimmer Loading Effect ═══════════ */
+.shimmer {
+    background: linear-gradient(90deg, var(--gray-200) 25%, var(--gray-100) 50%, var(--gray-200) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.shimmer-line {
+    height: 16px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+}
+
+.shimmer-line.short { width: 60%; }
+.shimmer-line.medium { width: 80%; }
+.shimmer-line.full { width: 100%; }
+
+/* ═══════════ Pulse Animations ═══════════ */
+.pulse-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.pulse-dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    animation: pulseDot 2s infinite;
+}
+
+.pulse-dot.success { background: var(--success); }
+.pulse-dot.success::after { background: var(--success); }
+.pulse-dot.danger { background: var(--danger); }
+.pulse-dot.danger::after { background: var(--danger); }
+.pulse-dot.warning { background: var(--warning); }
+.pulse-dot.warning::after { background: var(--warning); }
+
+@keyframes pulseDot {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(2.5); }
+}
+
+/* ═══════════ Ripple Effect ═══════════ */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* ═══════════ Gradient Animations ═══════════ */
+.gradient-animate {
+    background: linear-gradient(270deg, var(--primary), var(--primary-light), var(--accent), var(--primary));
+    background-size: 800% 800%;
+    animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ═══════════ Floating Animation ═══════════ */
+.float-animation {
+    animation: gentleFloat 3s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* ═══════════ Scale In ═══════════ */
+.scale-in {
+    animation: scaleIn 0.3s ease forwards;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* ═══════════ Slide Animations ═══════════ */
+.slide-in-left {
+    animation: slideInLeft 0.4s ease forwards;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.4s ease forwards;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-in-up {
+    animation: slideInUp 0.4s ease forwards;
+}
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════ Bounce Animation ═══════════ */
+.bounce {
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-10px); }
+    50% { transform: translateY(-5px); }
+    70% { transform: translateY(-2px); }
+}
+
+/* ═══════════ Rotate Animation ═══════════ */
+.rotate-in {
+    animation: rotateIn 0.5s ease forwards;
+}
+
+@keyframes rotateIn {
+    from { transform: rotate(-180deg) scale(0); opacity: 0; }
+    to { transform: rotate(0) scale(1); opacity: 1; }
+}
+
+/* ═══════════ Skeleton Loading ═══════════ */
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--gray-200);
+    border-radius: 8px;
+}
+
+.skeleton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    animation: skeletonWave 1.5s infinite;
+}
+
+@keyframes skeletonWave {
+    100% { left: 100%; }
+}
+
+/* ═══════════ Confetti Effect (for celebrations) ═══════════ */
+.confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: confettiFall 3s ease-in forwards;
+    z-index: 9999;
+}
+
+@keyframes confettiFall {
+    0% { top: -10px; transform: rotate(0deg); opacity: 1; }
+    100% { top: 110vh; transform: rotate(720deg); opacity: 0; }
+}
+
+/* ═══════════ Tooltip ═══════════ */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    background: var(--gray-900);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+[data-tooltip]:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-8px);
+}
+
+/* ═══════════ Focus Ring ═══════════ */
+:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.3);
+    border-radius: inherit;
+}
+
+/* ═══════════ Scroll Progress Bar ═══════════ */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    z-index: 9999;
+    transition: width 0.1s;
+}
+
+/* ═══════════ Print Styles ═══════════ */
+@media print {
+    .sidebar,
+    .top-header,
+    .toast-container,
+    .modal-overlay {
+        display: none !important;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+    }
+
+    .content-area {
+        padding: 0 !important;
+    }
+
+    body {
+        background: white;
+    }
+}

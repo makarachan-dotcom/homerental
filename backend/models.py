@@ -381,6 +381,31 @@ class MaintenanceResponse(BaseModel):
     tenant_name: Optional[str] = None
 
 
+# ============ Expense Models ============
+class ExpenseCreate(BaseModel):
+    category: str
+    description: str
+    amount_usd: float = 0
+    amount_khr: float = 0
+    expense_date: str
+    building_id: Optional[int] = None
+    vendor: Optional[str] = None
+    receipt_number: Optional[str] = None
+    notes: Optional[str] = None
+
+
+class ExpenseUpdate(BaseModel):
+    category: Optional[str] = None
+    description: Optional[str] = None
+    amount_usd: Optional[float] = None
+    amount_khr: Optional[float] = None
+    expense_date: Optional[str] = None
+    building_id: Optional[int] = None
+    vendor: Optional[str] = None
+    receipt_number: Optional[str] = None
+    notes: Optional[str] = None
+
+
 # ============ Dashboard Models ============
 class DashboardStats(BaseModel):
     total_rooms: int

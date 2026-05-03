@@ -12,8 +12,10 @@ from fastapi.templating import Jinja2Templates
 from backend.config import settings
 from backend.database import init_db, seed_default_data
 from backend.routes.auth_routes import router as auth_router
+from backend.routes.building_routes import router as building_router
 from backend.routes.contract_routes import router as contract_router
 from backend.routes.dashboard_routes import router as dashboard_router
+from backend.routes.expense_routes import router as expense_router
 from backend.routes.maintenance_routes import router as maintenance_router
 from backend.routes.payment_routes import router as payment_router
 from backend.routes.qr_routes import router as qr_router
@@ -60,6 +62,8 @@ app.include_router(payment_router)
 app.include_router(utility_router)
 app.include_router(maintenance_router)
 app.include_router(qr_router)
+app.include_router(building_router)
+app.include_router(expense_router)
 app.include_router(settings_router)
 
 # Static files and templates

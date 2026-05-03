@@ -7,6 +7,7 @@ let currentPage = 'dashboard';
 // Page configuration
 const PAGE_CONFIG = {
     dashboard: { title: 'ផ្ទាំងគ្រប់គ្រង', subtitle: 'ទិដ្ឋភាពទូទៅនៃអាជីវកម្មរបស់អ្នក', render: renderDashboard },
+    buildings: { title: 'អគារ', subtitle: 'គ្រប់គ្រងអគារ និងទីតាំង', render: renderBuildings },
     rooms: { title: 'គ្រប់គ្រងបន្ទប់', subtitle: 'មើល និងគ្រប់គ្រងបន្ទប់ទាំងអស់', render: renderRooms },
     tenants: { title: 'គ្រប់គ្រងអ្នកជួល', subtitle: 'ព័ត៌មានអ្នកជួល និងកិច្ចសន្យា', render: renderTenants },
     contracts: { title: 'កិច្ចសន្យា', subtitle: 'គ្រប់គ្រងកិច្ចសន្យាជួលទាំងអស់', render: renderContracts },
@@ -14,6 +15,10 @@ const PAGE_CONFIG = {
     utilities: { title: 'វិក័យប័ត្រសេវា', subtitle: 'ភ្លើង ទឹក អ៊ីនធើណិត', render: renderUtilities },
     maintenance: { title: 'ថែទាំ/ជួសជុល', subtitle: 'សំណើថែទាំ និងជួសជុល', render: renderMaintenance },
     qrcodes: { title: 'QR កូដ', subtitle: 'បង្កើត និងគ្រប់គ្រង QR កូដ', render: renderQRCodes },
+    reports: { title: 'របាយការណ៍', subtitle: 'វិភាគ និងនាំចេញរបាយការណ៍', render: renderReports },
+    notifications: { title: 'ការជូនដំណឹង', subtitle: 'ការជូនដំណឹង និងកំណត់ត្រាសកម្មភាព', render: renderNotifications },
+    expenses: { title: 'ចំណាយ', subtitle: 'កត់ត្រា និងវិភាគចំណាយប្រតិបត្តិការ', render: renderExpenses },
+    help: { title: 'ជំនួយ', subtitle: 'ព័ត៌មានប្រព័ន្ធ និងការណែនាំ', render: renderHelp },
     settings: { title: 'ការកំណត់', subtitle: 'កំណត់ប្រព័ន្ធ និងអ្នកប្រើប្រាស់', render: renderSettings },
 };
 

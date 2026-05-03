@@ -132,6 +132,19 @@ const API = {
     createMaintenance(data) { return this.post('/maintenance', data); },
     updateMaintenance(id, data) { return this.put(`/maintenance/${id}`, data); },
 
+    // Expenses
+    getExpenses(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return this.get(`/expenses?${query}`);
+    },
+    getExpenseSummary(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return this.get(`/expenses/summary?${query}`);
+    },
+    createExpense(data) { return this.post('/expenses', data); },
+    updateExpense(id, data) { return this.put(`/expenses/${id}`, data); },
+    deleteExpense(id) { return this.delete(`/expenses/${id}`); },
+
     // QR Codes
     getTenantQR(id, size = 300) { return `/api/qr/tenant/${id}?size=${size}`; },
     getRoomQR(id, size = 300) { return `/api/qr/room/${id}?size=${size}`; },

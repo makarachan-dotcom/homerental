@@ -213,6 +213,25 @@ async def init_db():
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
         );
 
+        CREATE TABLE IF NOT EXISTS expenses (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category TEXT NOT NULL,
+            description TEXT NOT NULL,
+            amount_usd REAL NOT NULL DEFAULT 0,
+            amount_khr REAL NOT NULL DEFAULT 0,
+            expense_date TEXT NOT NULL,
+            building_id INTEGER,
+            vendor TEXT,
+            receipt_number TEXT,
+            notes TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (building_id) REFERENCES buildings(id) ON DELETE SET NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_expenses_category ON expenses(category);
+        CREATE INDEX IF NOT EXISTS idx_expenses_date ON expenses(expense_date);
+
         CREATE TABLE IF NOT EXISTS settings_table (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             key TEXT UNIQUE NOT NULL,

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="km" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>សុខលីផ្ទះជួល - ព័ត៌មាន QR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Noto+Sans+Khmer:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans Khmer', 'Battambang', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .scan-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s ease;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .scan-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .scan-logo {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .scan-logo i { font-size: 30px; color: white; }
+        .scan-header h1 {
+            font-family: 'Battambang', cursive;
+            font-size: 22px;
+            color: #1a237e;
+            margin-bottom: 4px;
+        }
+        .scan-header p { color: #666; font-size: 13px; }
+        .info-section {
+            background: #f5f5f5;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .info-section h3 {
+            font-size: 14px;
+            color: #1a237e;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { color: #666; }
+        .info-value { font-weight: 600; color: #333; }
+        .scan-footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #eee;
+        }
+        .scan-footer p { font-size: 12px; color: #999; }
+        .scan-footer .location { margin-top: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .loading { text-align: center; padding: 40px; }
+        .loading i { font-size: 40px; color: #1a237e; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .error { text-align: center; color: #c62828; padding: 20px; }
+    </style>
+</head>
+<body>
+    <div class="scan-card">
+        <div class="scan-header">
+            <div class="scan-logo"><i class="fas fa-home"></i></div>
+            <h1>សុខលីផ្ទះជួល</h1>
+            <p>ប្រព័ន្ធគ្រប់គ្រងផ្ទះជួលឌីជីថល</p>
+        </div>
+
+        <div id="scanContent">
+            <div class="loading">
+                <i class="fas fa-spinner"></i>
+                <p style="margin-top: 16px; color: #666;">កំពុងផ្ទុកព័ត៌មាន...</p>
+            </div>
+        </div>
+
+        <div class="scan-footer">
+            <p>&copy; 2024 សុខលីផ្ទះជួល</p>
+            <div class="location">
+                <i class="fas fa-map-marker-alt" style="font-size:11px;"></i>
+                <span style="font-size:11px;">Domnak Thom 5, Phnom Penh, Cambodia</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const qrType = '{{ qr_type }}';
+        const itemId = {{ item_id }};
+
+        async function loadInfo() {
+            try {
+                const response = await fetch(`/api/qr/scan/${qrType}/${itemId}`);
+                if (!response.ok) throw new Error('មិនអាចផ្ទុកព័ត៌មានបានទេ');
+                const result = await response.json();
+                renderInfo(result);
+            } catch (error) {
+                document.getElementById('scanContent').innerHTML = `
+                    <div class="error">
+                        <i class="fas fa-exclamation-circle" style="font-size:40px; margin-bottom:12px;"></i>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderInfo(result) {
+            const data = result.data;
+            let html = '';
+
+            if (result.type === 'tenant') {
+                html = `
+                    <div class="info-section">
+                        <h3><i class="fas fa-user"></i> ព័ត៌មានអ្នកជួល</h3>
+                        <div class="info-row"><span class="info-label">ឈ្មោះ</span><span class="info-value">${data.first_name} ${data.last_name}</span></div>
+                        <div class="info-row"><span class="info-label">ទូរស័ព្ទ</span><span class="info-value">${data.phone}</span></div>
+                        ${data.room_number ? `<div class="info-row"><span class="info-label">បន្ទប់</span><span class="info-value">${data.room_number} (ជាន់ ${data.floor})</span></div>` : ''}
+                    </div>
+                    ${data.start_date ? `
+                    <div class="info-section">
+                        <h3><i class="fas fa-file-contract"></i> កិច្ចសន្យា</h3>
+                        <div class="info-row"><span class="info-label">ចាប់ផ្តើម</span><span class="info-value">${data.start_date}</span></div>
+                        <div class="info-row"><span class="info-label">បញ្ចប់</span><span class="info-value">${data.end_date}</span></div>
+                        <div class="info-row"><span class="info-label">ថ្លៃជួល</span><span class="info-value">$${data.monthly_rent_usd}/ខែ</span></div>
+                    </div>` : ''}
+                    <div class="info-section">
+                        <h3><i class="fas fa-building"></i> អគារ</h3>
+                        <div class="info-row"><span class="info-label">ឈ្មោះ</span><span class="info-value">${data.building_name || 'សុខលីផ្ទះជួល'}</span></div>
+                        <div class="info-row"><span class="info-label">អាសយដ្ឋាន</span><span class="info-value">${data.address || 'Domnak Thom 5, Phnom Penh'}</span></div>
+                    </div>
+                `;
+            } else if (result.type === 'room') {
+                html = `
+                    <div class="info-section">
+                        <h3><i class="fas fa-door-open"></i> ព័ត៌មានបន្ទប់</h3>
+                        <div class="info-row"><span class="info-label">លេខបន្ទប់</span><span class="info-value">${data.room_number}</span></div>
+                        <div class="info-row"><span class="info-label">ជាន់</span><span class="info-value">${data.floor}</span></div>
+                        <div class="info-row"><span class="info-label">ប្រភេទ</span><span class="info-value">${data.room_type}</span></div>
+                        <div class="info-row"><span class="info-label">ទំហំ</span><span class="info-value">${data.size_sqm || '-'} m²</span></div>
+                        <div class="info-row"><span class="info-label">តម្លៃ USD</span><span class="info-value">$${data.price_usd}/ខែ</span></div>
+                        <div class="info-row"><span class="info-label">តម្លៃ KHR</span><span class="info-value">៛${Number(data.price_khr).toLocaleString()}/ខែ</span></div>
+                        <div class="info-row"><span class="info-label">ស្ថានភាព</span><span class="info-value">${data.status}</span></div>
+                    </div>
+                    <div class="info-section">
+                        <h3><i class="fas fa-building"></i> អគារ</h3>
+                        <div class="info-row"><span class="info-label">ឈ្មោះ</span><span class="info-value">${data.building_name || 'សុខលីផ្ទះជួល'}</span></div>
+                        <div class="info-row"><span class="info-label">អាសយដ្ឋាន</span><span class="info-value">${data.address || 'Domnak Thom 5, Phnom Penh'}</span></div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('scanContent').innerHTML = html;
+        }
+
+        loadInfo();
+    </script>
+</body>
+</html>

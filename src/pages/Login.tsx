@@ -6,7 +6,8 @@ import { Home, Crown, ArrowRight } from "lucide-react";
 function getOAuthUrl() {
   const kimiAuthUrl = import.meta.env.VITE_KIMI_AUTH_URL;
   const appID = import.meta.env.VITE_APP_ID;
-  const redirectUri = `${window.location.origin}/api/oauth/callback`;
+  const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? window.location.origin).replace(/\/$/, "");
+  const redirectUri = `${apiBaseUrl}/api/oauth/callback`;
   const state = btoa(redirectUri);
 
   const url = new URL(`${kimiAuthUrl}/api/oauth/authorize`);

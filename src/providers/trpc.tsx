@@ -8,10 +8,11 @@ import type { ReactNode } from "react";
 export const trpc = createTRPCReact<AppRouter>();
 
 const queryClient = new QueryClient();
+const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").replace(/\/$/, "");
 const trpcClient = trpc.createClient({
   links: [
     httpBatchLink({
-      url: "/api/trpc",
+      url: `${apiBaseUrl}/api/trpc`,
       transformer: superjson,
       fetch(input, init) {
         return globalThis.fetch(input, {
